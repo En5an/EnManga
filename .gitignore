@@ -1,0 +1,13 @@
+# build output (VPKs go on the GitHub Releases page, not in the repo)
+dist/
+*.vpk
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+._*
+__pycache__/
+*.pyc
+.vscode/
+.idea/

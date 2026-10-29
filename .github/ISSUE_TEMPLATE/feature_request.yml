@@ -1,0 +1,21 @@
+name: Feature idea
+description: Suggest something new or a change to how EnManga works
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+      description: Describe the feature and how you'd use it
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why?
+      description: What's awkward or missing right now
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Screenshots, a similar feature in another reader (Komikku, Tachiyomi, NOBORU…), etc.
