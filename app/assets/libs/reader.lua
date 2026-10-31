@@ -882,19 +882,36 @@ local function readerSettingsSheet()
 	Sheet.open {title = "Reader settings", items = items, closeWithStart = true}
 end
 
-function Reader.applyScreenLock(on)
+-- "Keep screen on while reading".
+-- Only the screen dimming / screen off timers are held, never auto-suspend:
+-- the Vita can still be put to sleep with the power button, and once the
+-- reader has been left alone for SCREEN_IDLE_MS the locks are released so
+-- the system's own dim / off / sleep timers run again (a reader left open
+-- on the bed goes to sleep as usual). Any input takes the lock again.
+-- sceKernelPowerLock counts calls, so the lock is only ever taken once.
+local screenLocked = false
+local SCREEN_IDLE_MS = 10 * 60 * 1000
+local function setScreenLock(on)
+	if on == screenLocked then return end
+	screenLocked = on
 	if on then
 		pcall(System.disableTimer, SCREEN_DIMMING_TIMER)
 		pcall(System.disableTimer, SCREEN_OFF_TIMER)
-		pcall(System.disableTimer, AUTO_SUSPEND_TIMER)
-		R.locked = true
-	elseif R.locked then
+	else
 		pcall(System.enableTimer, SCREEN_DIMMING_TIMER)
 		pcall(System.enableTimer, SCREEN_OFF_TIMER)
-		pcall(System.enableTimer, AUTO_SUSPEND_TIMER)
-		R.locked = false
 	end
 end
+function Reader.applyScreenLock(on)
+	R.wantLock = on and true or false
+	setScreenLock(R.wantLock)
+end
+-- called every reader frame with whether the reader was used recently
+local function updateScreenLock(idleMs)
+	if not R.wantLock then return end
+	setScreenLock(idleMs < SCREEN_IDLE_MS)
+end
+function Reader._screenLock(ms) if ms then SCREEN_IDLE_MS = ms end return screenLocked end
 
 ------------------------------------------------------------------------
 -- Navigation actions
@@ -1604,6 +1621,7 @@ function ReaderScreen:update(dt)
 	-- reading time: counted while there was input recently (or auto-scroll runs)
 	R.clock = (R.clock or 0) + dt
 	if Input.any() or Input.lx ~= 0 or Input.ly ~= 0 or R.auto then R.lastActive = R.clock end
+	updateScreenLock(R.clock - (R.lastActive or 0))
 	if R.clock - (R.lastActive or 0) < STAT_IDLE_MS then
 		R.statMs = (R.statMs or 0) + dt
 	end

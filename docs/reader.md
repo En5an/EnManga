@@ -212,7 +212,7 @@ Turning past the last page shows a card with **FINISHED** (the chapter you just 
 | Option | Default | What it does |
 |---|---|---|
 | Pages to preload | 2 | How many pages around the current one are loaded in advance (1–4). More means faster page turns but uses more memory. |
-| Keep screen on while reading | On | Stops the Vita dimming or sleeping while you read |
+| Keep screen on while reading | On | Stops the screen dimming or turning off while you read. After 10 minutes without any input (auto-scroll counts as input) the Vita's normal dim and sleep timers take over again, and the power button always puts it to sleep. |
 | Continue into next chapter | On | See [Chapter transitions](#chapter-transitions) |
 | Orientation (series) | Same as app | See [Portrait mode](orientation.md#reader-orientation) |
 

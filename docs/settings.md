@@ -111,7 +111,7 @@ These are the defaults for all series. Options marked **(series)** can also be s
 | Pages to preload | 1 – 4 (**2**) |
 | Texture quality | Full resolution · **High (≤2048 px)** · Balanced (≤1280 px) |
 | Continue into next chapter | **On** · Off |
-| Keep screen on while reading | **On** · Off |
+| Keep screen on while reading | **On** · Off (stops dimming while you read; normal sleep after 10 minutes idle) |
 
 ## Statistics
 
