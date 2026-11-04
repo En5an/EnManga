@@ -1,10 +1,5 @@
 # Changelog
 
-## Unreleased
-
-**Fixes**
-- *Keep screen on while reading* no longer blocks sleep. It used to hold the Vita's auto-suspend lock, and applying a preset or toggling the setting took the lock again without releasing it. So a lock could be left behind after you closed the reader, and the Vita then stopped auto-suspending anywhere in the app. Now only the screen dim / off timers are held, only once, only while you're actually reading, and they're released after 10 minutes without input.
-
 ## Beta v1.0 — first public release
 
 This release combines all the private test builds (1.0 to 1.4). Like the rest of the project, it was built with an AI assistant; see *About this project and AI use* in the README.
@@ -35,6 +30,9 @@ This release combines all the private test builds (1.0 to 1.4). Like the rest of
 - **Accent colour:** 12 presets (Orange by default) or any custom colour, from a colour picker with a hue bar, a colour square, hex entry and a live preview.
 - New logo: a glowing blue circle with EnManga in orange.
 - **Animated GIF covers:** a `cover.gif` plays when selected (default), always, or never, with memory limits so big GIFs can't slow reading.
+
+**Fixes since the test builds**
+- *Keep screen on while reading* no longer blocks sleep: only the screen dim / off timers are held, never auto-suspend, and they're released after 10 minutes without input.
 
 **Tools**
 - `EnManga-Converter.html`: converts WebP manga to JPG on your computer.
